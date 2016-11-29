@@ -8,8 +8,15 @@
 #define TOUCH_DIN_PIN				GPIO_PIN_6
 
 //FOLLOWING PIN IS DATA IN TO STM32
-#define TOUCH_DOUT_PIN			GPIO_PIN_8
+#define TOUCH_DOUT_PIN			GPIO_PIN_10
 
-#define TOUCH_PENIRQ_PIN		GPIO_PIN_9
+#define TOUCH_PENIRQ_PIN		GPIO_PIN_11
 
 #define TOUCH_PORT_REGISTER		GPIOD
+
+
+void GPIO_Touch_Init(void);
+uint16_t touch_ReadData(void);
+void touch_WriteData(uint8_t data);
+uint32_t touch_TestRead(void);
+

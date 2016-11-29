@@ -30,7 +30,7 @@ void GPIO_Touch_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_LOW;
   HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 	
-	GPIO_InitStruct.Pin = GPIO_PIN_8 | GPIO_PIN_9 | GPIO_PIN_10;
+	GPIO_InitStruct.Pin = GPIO_PIN_10 | GPIO_PIN_11; // | GPIO_PIN_12;
 	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   GPIO_InitStruct.Speed = GPIO_SPEED_LOW;
@@ -92,6 +92,25 @@ uint16_t touch_ReadData(void)
 		}
 	}
 	return data;
+}
+
+uint32_t touch_TestRead(void)
+{
+	uint32_t temp_x=0;
+	
+	write_pin(GPIOD, TOUCH_CS_PIN, 0);
+	
+	if(!read_pin(GPIOD, TOUCH_PENIRQ_PIN))
+	{
+		touch_WriteData(0x90);
+		pulse_high(GPIOD, TOUCH_DCLK_PIN);
+		temp_x = touch_ReadData();
+		return temp_x;
+	}
+	else
+	{
+		return 0UL;
+	}
 }
 
 void touch_WriteData(uint8_t data)
